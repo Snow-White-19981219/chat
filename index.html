@@ -20,19 +20,34 @@
       overflow-y: scroll;
       width: 100%;
     }
+    .chat{
+      margin: 1rem;
+      width: calc(100% - 2rem);
+    }
+    .text{
+    }
+    .date{
+      font-size: 0.5rem;
+    }
     #input{
       display: flex;
       height: 3rem;
       width: 100%;
     }
     #message,#send{
-      display: block;
+      align-items: center;
+      border: solid 1px gray;
+      box-sizing: border-box;
+      display: flex;
       height: 3rem;
+      justify-content: center;
+      padding: 0;
     }
     #message{
       width: 80%;
     }
     #send{
+      background-color: lightgray;
       width: 20%;
     }
     </style>
@@ -44,7 +59,7 @@
       </div>
       <div id="input">
         <input id="message" placeholder="メッセージ" type="text" />
-        <buttonid="send" type="button">送信</button>
+        <button id="send" type="button">送信</button>
       </div>
     </div>
     <script>
@@ -79,6 +94,7 @@
         const element=document.createElement("div");
         const elementDate=document.createElement("div");
         const elementText=document.createElement("div");
+        element.setAttribute("class","chat");
         elementDate.setAttribute("class","date");
         elementText.setAttribute("class","text");
         elementDate.textContent=val.date;
