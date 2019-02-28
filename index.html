@@ -25,6 +25,7 @@
       width: calc(100% - 2rem);
     }
     .text{
+      font-size: 2rem;
     }
     .date{
       font-size: 0.5rem;
@@ -72,7 +73,7 @@
       projectId: "swchat-19981219"
     });
     const database=firebase.database();
-    const ref=database.ref("message");
+    const ref=database.ref("chat");
     const thread=document.getElementById("thread");
     const message=document.getElementById("message");
     const send=document.getElementById("send");
