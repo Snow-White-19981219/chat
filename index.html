@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <title>わたさんへ</title>
+    <style>
+    @charset="utf-8";
+    html,body,#app{
+      height: 100%;
+      width: 100%;
+    }
+    html{
+      font-size: 10px;
+    }
+    body{
+      margin: 0;
+    }
+    #thread{
+      height: calc(100% - 3rem);
+      overflow-y: scroll;
+      width: 100%;
+    }
+    #input{
+      display: flex;
+      height: 3rem;
+      width: 100%;
+    }
+    #message,#send{
+      display: block;
+      height: 3rem;
+    }
+    #message{
+      width: 80%;
+    }
+    #send{
+      width: 20%;
+    }
+    </style>
+    <script src="https://www.gstatic.com/firebasejs/5.8.4/firebase.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <div id="thread">
+      </div>
+      <div id="input">
+        <input id="message" type="text" />
+        <input id="send" type="button" />
+      </div>
+    </div>
+    <script>
+    firebase.initializeApp({
+      apiKey: "AIzaSyCosZdS-SzOUfXs6xwSR7sdOcK9C7HWA8o",
+      authDomain: "swchat-19981219.firebaseapp.com",
+      databaseURL: "https://swchat-19981219.firebaseio.com",
+      messagingSenderId: "330691942843",
+      storageBucket: "swchat-19981219.appspot.com",
+      projectId: "swchat-19981219"
+    });
+    const database=firebase.database();
+    const ref=database.ref("message");
+    const thread=document.getElementById("thread");
+    const message=document.getElementById("message");
+    const send=document.getElementById("send");
+    send.addEventListener("click",function(event){
+      const text=message.value;
+      if(value!=""){
+        const date=new Date();
+        ref.push({
+          date: `${date.getFullYear()}/${date.getMonth()+1}/${date.getDate()} ${date.getHours()}:${date.getMinutes()}`,
+          text: text,
+          read: false
+        }).then(function(resolve){
+          message.value="";
+        });
+      }
+    },false);
+    ref.on("child_added",function(snapshot){
+      const val=snapshot.val();
+      if(val!=null){
+        const element=document.createElement("div");
+        const elementDate=document.createElement("div");
+        const elementText=document.createElement("div");
+        elementDate.setAttribute("class","date");
+        elementText.setAttribute("class","text");
+        elementDate.textContent=val.date;
+        elementText.textContent=val.text;
+        element.appendChild(elementText);
+        element.appendChild(elementDate);
+        thread.appendChild(element);
+      }
+    });
+    </script>
+  </body>
+</html>
